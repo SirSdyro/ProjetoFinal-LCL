@@ -1,0 +1,10 @@
+module demux4(
+input Dado,
+input Escolha,
+output [3:0] Saida
+);
+assign Saida[0]= Escolha==1'b0 ? Dado : 1'b0;
+assign Saida[1]= Escolha==1'b1 ? Dado : 1'b0;
+assign Saida[2]= Escolha==1'b2 ? Dado : 1'b0;
+assign Saida[3]= Escolha==1'b3 ? Dado : 1'b0;
+endmodule

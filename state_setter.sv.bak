@@ -1,0 +1,62 @@
+module 	StateSetter(
+            
+            input logic SetPress,
+            input logic reset,
+            input logic enable,
+            output logic [1:0] Select,
+				output logic s,
+            
+        );
+
+	typedef enum logic [1:0] {HORAS,MINUTOS,SEGUNDOS,ACABOU} statetype;
+	statetype state, nextstate;
+
+	always_ff @(posedge SetPress, posedge reset)
+		if (reset) state <= APAGA_TODAS;
+		else state <= nextstate;
+
+	always_comb
+	  	case (state)
+
+			HORAS: if (enable) nextstate = MINUTOS;
+						  else nextstate = HORAS;
+			MINUTOS: if (enable) nextstate = SEGUNDOS;
+						  else nextstate = MINUTOS;
+			SEGUNDOS: if (enable) nextstate = ACABOU;
+						  else nextstate = SEGUNDOS;			  
+			ACABOU: nexstate = HORAS
+			default: nextstate = HORAS;
+
+		endcase
+
+	always_comb
+		case (state)
+
+			 HORAS:		begin 
+									Select = 2'b10; 
+									s = 1;
+						 		end	
+
+			 MINUTOS:		begin 
+									Select = 2'b01; 
+									s = 0;
+						   		end
+			
+			 SEGUNDOS:	begin 
+									Select = 2'b00; 
+									s = 0;
+								end	 
+
+			 ACABOU:  		begin 
+									Select = 2'b10; 
+									s = 1;
+								end	
+
+			default:  			begin 
+									Select = 2'b10; 
+									s = 1;
+								end	
+
+		endcase
+
+endmodule

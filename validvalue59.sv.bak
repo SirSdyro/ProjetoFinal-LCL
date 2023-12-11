@@ -1,0 +1,12 @@
+module ValidValue_59(
+	input logic [5:0] decimal,
+	output logic enable,
+	);
+
+if (decimal <= 24) begin
+enable <= 1
+end
+else begin
+enable <= 0
+	
+endmodule
